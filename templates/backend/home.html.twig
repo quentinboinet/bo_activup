@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Accueil {% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col col-md-6">
+                <div class="card card-accent-warning">
+                    <div class="card-header text-center">Dernières mesures</div>
+                    <div class="card-body">
+                        {{ render(controller(
+                            'App\\Controller\\MeasureController::getLastMeasure'
+                        )) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

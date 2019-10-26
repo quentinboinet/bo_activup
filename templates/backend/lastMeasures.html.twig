@@ -1,0 +1,25 @@
+<table class="table table-hover table-bordered text-center">
+    <thead class="thead-light">
+    <tr>
+        <th scope="col">Compteur</th>
+        <th scope="col">Client</th>
+        <th scope="col">Dernière mesure (m)</th>
+        <th scope="col">Date de la mesure</th>
+    </tr>
+    </thead>
+    <tbody>
+{% for measure in measures %}
+    <tr
+            {% if ('now'|date('U') - measure.timestamp) > 60*60*24*30 %} class="table-danger"
+            {% elseif ('now'|date('U') - measure.timestamp) > 60*60*24*15 %} class="table-warning"
+            {% else %} class="table-success"
+            {% endif %}
+    >
+        <td>{{ measure.device }}</td>
+        <td>{{ measure.client }}</td>
+        <td>{{ measure.value }}</td>
+        <td>{{ measure.timestamp | date("d-m-Y à H:i") }}</td>
+    </tr>
+{% endfor %}
+    </tbody>
+</table>

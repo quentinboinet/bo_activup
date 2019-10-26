@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Utilisation par semaine {% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">Données d'utilisation par semaine</div>
+        <div class="card-body">
+        <div class="row justify-content-center text-center">
+            <div class="col col-md-8">
+            <p>Compteur à afficher :
+            <select id="deviceSelect" name="deviceSelect">
+                {% for device in devices %}
+                    <option name="{{ device.name }}" value="{{ device.id }}">{{ device.name }}</option>
+                {% endfor %}
+            </select>
+            </p>
+            <br />
+            <table class="table table-hover table-bordered text-center">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">Compteur</th>
+                    <th scope="col">Client</th>
+                    <th scope="col">Semaine</th>
+                    <th scope="col">Distance parcourue (km)</th>
+                    <th scope="col">Temps d'utilisation</th>
+                    <th scope="col">Vitesse moyenne (km/h)</th>
+                </tr>
+                </thead>
+                {% for device in devices %}
+                    <tbody id="{{ device.id }}" {% if loop.index0 == 0 %} style="display:table-row-group;" {% else %} style="display:none;" {% endif %}>
+
+                    {%  for weeklyStat in weeklyStats %}
+
+                        {% if weeklyStat.device.name == device.name %}
+                            {% set week = weeklyStat.week |split('W') %}
+                            <tr>
+                                <td>{{ weeklyStat.device.name }}</td>
+                                <td>{{ weeklyStat.device.client.name }}</td>
+                                <td>{{ week[1] }}</td>
+                                <td>{{ ((weeklyStat.distance)/1000) | round(2, 'common') }}</td>
+                                <td>{{ weeklyStat.duration | date('H') }}h{{ weeklyStat.duration | date('i') }}min{{ weeklyStat.duration | date('s') }}s</td>
+                                <td>{{ weeklyStat.speed | round(2, 'common') }}</td>
+                            </tr>
+                            {% endif %}
+                    {% endfor %}
+                    </tbody>
+                {% endfor %}
+            </table>
+                <i>* Les données de la semaine en cours seront disponibles et affichées dès la semaine suivante.</i>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/pings.js') }}"></script>
+{% endblock %}

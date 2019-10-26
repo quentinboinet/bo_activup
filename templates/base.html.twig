@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <title>ActivUP - {% block title %}{% endblock %}</title>
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('css/base.css') }}"/>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+            <link rel="stylesheet" href="https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css">
+        {% endblock %}
+
+    </head>
+
+    <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+        <header class="app-header navbar">
+            <a class="navbar-brand">
+                <img class="navbar-brand-full" src="{{ asset('images/logo.jpg') }}" title="ActivUP" alt="Logo ActivUP" />
+            </a>
+            <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </header>
+        <div class="app-body">
+            <div class="sidebar">
+                <nav class="sidebar-nav">
+                    <ul class="nav">
+                        <li class="nav-title">Menu</li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('home') }}">
+                                <i class="nav-icon fas fa-home"></i> Accueil
+                            </a>
+                        </li>
+                        <li class="nav-item nav-dropdown">
+                            <a class="nav-link nav-dropdown-toggle" href="#">
+                                <i class="nav-icon fas fa-file-alt"></i> Suivi d'utilisation
+                            </a>
+                            <ul class="nav-dropdown-items">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ path('daily_stats') }}">
+                                        <i class="nav-icon fas fa-calendar-day"></i> Par jour
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav-dropdown-items">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ path('weekly_stats') }}">
+                                        <i class="nav-icon fab fa-weebly"></i> Par semaine
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item nav-dropdown">
+                            <a class="nav-link nav-dropdown-toggle" href="#">
+                                <i class="nav-icon fas fa-wifi"></i> Connectivité
+                            </a>
+                            <ul class="nav-dropdown-items">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ path('pings_home') }}">
+                                        <i class="nav-icon fas fa-percent"></i> Etat de connexion
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+                <button class="sidebar-minimizer brand-minimizer" type="button"></button>
+            </div>
+
+            <main class="main">
+            {% block body %}
+            {% endblock %}
+            </main>
+
+        </div>
+
+        <footer class="app-footer">
+                ActivUP - Copyright 2019
+        </footer>
+
+        {% block javascripts %}
+            <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+            <script src="https://unpkg.com/@coreui/coreui/dist/js/coreui.min.js"></script>
+            <script type="text/javascript" src="{{ asset('js/base.js') }}"></script>
+        {% endblock %}
+
+    </body>
+</html>
