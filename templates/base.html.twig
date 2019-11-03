@@ -28,15 +28,25 @@
                 <nav class="sidebar-nav">
                     <ul class="nav">
                         <li class="nav-title">Menu</li>
+                        {% if is_granted('ROLE_ADMIN') %}
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('home') }}">
                                 <i class="nav-icon fas fa-home"></i> Accueil
                             </a>
                         </li>
+                        {% endif %}
+                        {% if is_granted('ROLE_USER') %}
                         <li class="nav-item nav-dropdown">
                             <a class="nav-link nav-dropdown-toggle" href="#">
                                 <i class="nav-icon fas fa-file-alt"></i> Suivi d'utilisation
                             </a>
+                            <ul class="nav-dropdown-items">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ path('daily_stats') }}">
+                                        <i class="nav-icon fab fa-superpowers"></i> Par session
+                                    </a>
+                                </li>
+                            </ul>
                             <ul class="nav-dropdown-items">
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ path('daily_stats') }}">
@@ -52,6 +62,8 @@
                                 </li>
                             </ul>
                         </li>
+                        {% endif %}
+                        {% if is_granted('ROLE_ADMIN') %}
                         <li class="nav-item nav-dropdown">
                             <a class="nav-link nav-dropdown-toggle" href="#">
                                 <i class="nav-icon fas fa-wifi"></i> Connectivité
@@ -64,6 +76,7 @@
                                 </li>
                             </ul>
                         </li>
+                        {% endif %}
                     </ul>
                 </nav>
                 <button class="sidebar-minimizer brand-minimizer" type="button"></button>

@@ -21,7 +21,7 @@ class Device
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $name;
+    private $hostname;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Ping", mappedBy="device")
@@ -49,11 +49,28 @@ class Device
      */
     private $dailyStats;
 
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $name;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Subset", inversedBy="devices")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $subset;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\SessionStat", mappedBy="device")
+     */
+    private $sessionStats;
+
     public function __construct()
     {
         $this->Pings = new ArrayCollection();
         $this->weeklyStats = new ArrayCollection();
         $this->dailyStats = new ArrayCollection();
+        $this->sessionStats = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -61,14 +78,14 @@ class Device
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getHostname(): ?string
     {
-        return $this->name;
+        return $this->hostname;
     }
 
-    public function setName(string $name): self
+    public function setHostname(string $hostname): self
     {
-        $this->name = $name;
+        $this->hostname = $hostname;
 
         return $this;
     }
@@ -184,6 +201,61 @@ class Device
             // set the owning side to null (unless already changed)
             if ($dailyStat->getDevice() === $this) {
                 $dailyStat->setDevice(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getSubset(): ?Subset
+    {
+        return $this->subset;
+    }
+
+    public function setSubset(?Subset $subset): self
+    {
+        $this->subset = $subset;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SessionStat[]
+     */
+    public function getSessionStats(): Collection
+    {
+        return $this->sessionStats;
+    }
+
+    public function addSessionStat(SessionStat $sessionStat): self
+    {
+        if (!$this->sessionStats->contains($sessionStat)) {
+            $this->sessionStats[] = $sessionStat;
+            $sessionStat->setDevice($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSessionStat(SessionStat $sessionStat): self
+    {
+        if ($this->sessionStats->contains($sessionStat)) {
+            $this->sessionStats->removeElement($sessionStat);
+            // set the owning side to null (unless already changed)
+            if ($sessionStat->getDevice() === $this) {
+                $sessionStat->setDevice(null);
             }
         }
 

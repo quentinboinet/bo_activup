@@ -33,9 +33,9 @@
 
                     <!-- donnée du jour actuel -->
                     {% for todayStat in todayStats %}
-                        {% if todayStat.device == device.name %}
+                        {% if todayStat.device == device.hostname %}
                         <tr>
-                            <td>{{ todayStat.device }}</td>
+                            <td>{{ device.name }}</td>
                             <td>{{ todayStat.client }}</td>
                             <td>{{ "now" | date('d/m/Y') }}</td>
                             <td>{{ ((todayStat.distance)/1000) | round(2, 'common') }}</td>

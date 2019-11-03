@@ -20,7 +20,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $email;
+    private $username;
 
     /**
      * @ORM\Column(type="json")
@@ -33,32 +33,29 @@ class User implements UserInterface
      */
     private $password;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Organization", inversedBy="users")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $organization;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getEmail(): ?string
+    public function getUsername(): ?string
     {
-        return $this->email;
+        return $this->username;
     }
 
-    public function setEmail(string $email): self
+    public function setUsername(string $username): self
     {
-        $this->email = $email;
+        $this->username = $username;
 
         return $this;
     }
 
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
-    public function getUsername(): string
-    {
-        return (string) $this->email;
-    }
 
     /**
      * @see UserInterface
@@ -109,5 +106,17 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getOrganization(): ?Organization
+    {
+        return $this->organization;
+    }
+
+    public function setOrganization(?Organization $organization): self
+    {
+        $this->organization = $organization;
+
+        return $this;
     }
 }

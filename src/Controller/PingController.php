@@ -19,7 +19,7 @@ class PingController extends AbstractController
     }
 
     /**
-     * @Route("/pings", name="pings_home")
+     * @Route("/admin/pings", name="pings_home")
      */
     public function ping_home(EntityManagerInterface $em)
     {
@@ -40,7 +40,7 @@ class PingController extends AbstractController
                 $date = new \DateTime();
                 $date->setTimestamp($timestamp);
 
-                $deviceName = $device->getName();
+                $deviceName = $device->getHostname();
                 $filename = "http://stats.activup.net/p/log/" . $jourAConsiderer . "/" . $deviceName . "-" . $jourAConsiderer . ".txt";
                 if (!empty(@file_get_contents($filename))) {
                     $contenuFichier = explode("\n", file_get_contents($filename));
@@ -49,11 +49,11 @@ class PingController extends AbstractController
                     $nbrePingsTheorique = floor((date('H', time()) * 60 + date('i', time()))/5);
                     $pourcentageConnexion = floor(($nbrePings/$nbrePingsTheorique)*100);
 
-                    $pingsToday[$device->getName()] = $pourcentageConnexion;
+                    $pingsToday[$device->getHostname()] = $pourcentageConnexion;
 
                 }
                 else {
-                    $pingsToday[$device->getName()] = 0;
+                    $pingsToday[$device->getHostname()] = 0;
                 }
         }
 
@@ -61,7 +61,7 @@ class PingController extends AbstractController
     }
 
     /**
-     * @Route("/cron/pings", name="save_pings")
+     * @Route("/admin/cron/pings", name="save_pings")
      */
     public function save_pings(EntityManagerInterface $em)
     {
@@ -85,7 +85,7 @@ class PingController extends AbstractController
                 $date = new \DateTime();
                 $date->setTimestamp($timestamp);
 
-                $deviceName = $device->getName();
+                $deviceName = $device->getHostname();
                 $filename = "http://stats.activup.net/p/log/" . $jourAConsiderer . "/" . $deviceName . "-" . $jourAConsiderer . ".txt";
                 if (!empty(@file_get_contents($filename))) {
                     $contenuFichier = explode("\n", file_get_contents($filename));
